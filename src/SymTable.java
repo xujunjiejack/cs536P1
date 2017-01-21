@@ -1,7 +1,7 @@
-import com.sun.org.apache.xerces.internal.util.SymbolTable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.management.Notification;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * The SymTable class must be in a file named SymTable.java.
@@ -14,6 +14,8 @@ import javax.management.Notification;
  * Created by junjie on 1/19/17.
  */
 public class SymTable {
+
+    private List<HashMap<String, Sym>> table;
 
     /**
      *  	This is the constructor;
@@ -29,10 +31,10 @@ public class SymTable {
      * If either name or sym (or both) is null, throw a NullPointerException.
      * If the first HashMap in the list already contains the given name as a key, throw a DuplicateSymException.
      * Otherwise, add the given name and sym to the first HashMap in the list.
-     * @param name
-     * @param sym
-     * @throws DuplicateSymException
-     * @throws EmptySymTableException
+     * @param name: symbol name
+     * @param sym: the Sym instance associated with this symbol name
+     * @throws DuplicateSymException when there is the given name as a key
+     * @throws EmptySymTableException when there is no HashMap also called Scope in the list
      */
     public void addDecl(String name, Sym sym) throws DuplicateSymException, EmptySymTableException{
 
@@ -48,9 +50,11 @@ public class SymTable {
 
     /**
      * If this SymTable's list is empty, throw an EmptySymTableException.
-     * Otherwise, if the first HashMap in the list contains name as a key, return the associated Sym; otherwise, return null
-     * @param name
-     * @return
+     * Otherwise, if the first HashMap in the list contains name as a key, return the associated Sym;
+     * otherwise, return null
+     * @param name: the name you want to look up
+     * @return: the symbol information associated with this name in the lowest scope
+     *          otherwise return null
      */
     public Sym lookupLocal(String name){
         throw new NotImplementedException();
@@ -61,7 +65,7 @@ public class SymTable {
      * If this SymTable's list is empty, throw an EmptySymTableException.
      * If any HashMap in the list contains name as a key, return the first associated Sym
      * (i.e., the one from the HashMap that is closest to the front of the list); otherwise, return null.
-     * @param name
+     * @param name: the name of the symbol you want to look up
      * @return
      */
     public Sym lookupGlobal(String name){
@@ -72,7 +76,8 @@ public class SymTable {
     /**
      * If this SymTable's list is empty, throw an EmptySymTableException;
      * otherwise, remove the HashMap from the front of the list.
-     * To clarify, throw an exception only if before attempting to remove, the list is empty (i.e. there are no HashMaps to remove).
+     * To clarify, throw an exception only if before attempting to remove, the list is empty
+     * (i.e. there are no HashMaps to remove).
      * @throws EmptySymTableException
      */
     public void removeScope() throws EmptySymTableException{
