@@ -1,17 +1,10 @@
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
-import javax.sound.midi.SysexMessage;
 
 /**
+ * This main method is used to test the implementation of the Sym and SymTable
  *
  * Created by junjie on 1/19/17.
  */
 public class P1 {
-
-    private void printUnexpectedException(){
-        System.out.println("Here shouldn't be an exception");
-    }
-
 
     public static void main(String[] args){
 
@@ -69,6 +62,19 @@ public class P1 {
 
 
         symbolTable.addScope();
+
+        // Test add scope works well
+        try{
+            symbolTable.removeScope();
+        } catch (EmptySymTableException e ){
+        }
+
+        try{
+            symbolTable.removeScope();
+            System.out.println("Add scope does not work right");
+        }catch (EmptySymTableException e){
+        }
+
 
         // Test null pointer
         try{
@@ -146,27 +152,6 @@ public class P1 {
         if (symbolTable.lookupLocal("batman")!= batmanSym){
             System.out.println("Wrong result for looking up Global");
         }
-
-
-        // Test Duplicate Sym Exception
-
-        // Test add decl.
-
-        // Test add Scope
-
-        // Test lookup local with the right one
-
-        // Test lookup global with not exist
-
-        // Test lookup global with the second
-
-        // Test lookup global with the right order. Make sure the sym table always find the closest scope instead of the
-        // further one
-
-        // Test lookup local only return the local one
-
-        // Test EmptySymtableException
-
 
     }
 }
