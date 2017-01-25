@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            CS 536 Assignment 1
+// Files:            P1.java
+// Semester:         Spring 2017
+//
+// Author:           Junjie Xu
+// Email:            jxu259
+// CS Login:         junjie
+// Lecturer's Name:  Thomas Repp
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ////////////////////
 
 /**
  * This main method is used to test the implementation of the Sym and SymTable
@@ -33,20 +44,23 @@ public class P1 {
         } catch (DuplicateSymException e){
 
         } catch (EmptySymTableException e){
-            System.out.print(String.format("There should be one empty scope after initializaion"));
+            System.out.print(String.format("There should be one " +
+                    "empty scope after initializaion"));
         }
 
         // remove that scope
         try{
             symbolTable.removeScope();
         } catch (EmptySymTableException e){
-            System.out.println("There should be one empty scope after initializaion");
+            System.out.println("There should be one " +
+                    "empty scope after initializaion");
         }
 
         //Test empty sym table
         try{
             symbolTable.removeScope();
-            System.out.println("No exception thrown on attempt to remove scope");
+            System.out.println("No exception " +
+                    "thrown on attempt to remove scope");
         } catch (EmptySymTableException e){
 
         }
@@ -117,11 +131,13 @@ public class P1 {
 
         // Test lookup local with null
         if(symbolTable.lookupLocal("DoctorWho?")!= null){
-            System.out.println("Wrong result for looking something that doesn't exist in local.");
+            System.out.println("Wrong result for looking " +
+                    "something that doesn't exist in local.");
         }
 
         if(symbolTable.lookupGlobal("DoctorWho?")!= null){
-            System.out.println("Wrong result for looking something that doesn't exist in global.");
+            System.out.println("Wrong result for looking " +
+                    "something that doesn't exist in global.");
         }
 
         Sym batmanDupSym = new Sym("Hero");
@@ -146,7 +162,8 @@ public class P1 {
 
         symbolTable.addScope();
         if (symbolTable.lookupGlobal("batman") == batmanSym){
-            System.out.println("Lookup global doesn't follow the rule of only finding the closest scope");
+            System.out.println("Lookup global doesn't follow the " +
+                    "rule of only finding the closest scope");
         }
 
         if (symbolTable.lookupLocal("batman")!= batmanSym){
