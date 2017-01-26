@@ -9,15 +9,17 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Sym {
 
-    public Sym(String type){
+    private String type;
 
+    public Sym(String type){
+        this.type = type;
     }
 
     public String getType(){
-        throw new NotImplementedException();
+        return type;
     }
 
     public String toString(){
-        throw new NotImplementedException();
+        return type;
     }
 }

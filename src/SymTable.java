@@ -1,7 +1,6 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * The SymTable class must be in a file named SymTable.java.
@@ -15,13 +14,15 @@ import java.util.List;
  */
 public class SymTable {
 
-    private List<HashMap<String, Sym>> table;
+    private LinkedList<HashMap<String, Sym>> table;
 
     /**
      *  	This is the constructor;
      *  	it should initialize the SymTable's List field to contain a single, empty HashMap.
      */
     public SymTable(){
+        table = new LinkedList<HashMap<String, Sym>>();
+        table.push(new HashMap<String, Sym>());
 
     }
 
@@ -37,16 +38,34 @@ public class SymTable {
      * @throws EmptySymTableException when there is no HashMap also called Scope in the list
      */
     public void addDecl(String name, Sym sym) throws DuplicateSymException, EmptySymTableException{
+        if (name == null || sym == null) {
+            throw new NullPointerException("Null argument for method addDecl.");
+        }
 
+        if (this.table.size() == 0){
+            throw new EmptySymTableException();
+        }
 
+        // get the lowest scope, also called currentScope
+        HashMap<String,Sym> currentScope = this.table.peek();
+
+        if (currentScope.containsKey(name)){
+            throw new DuplicateSymException();
+        }
+
+        // One question is whether it's possible that the sym also gets key by
+        // others
+
+        currentScope.put(name, sym);
     }
 
     /**
      * Add a new, empty HashMap to the front of the list.
      */
     public void addScope(){
-
+        this.table.push(new HashMap<String, Sym>());
     }
+
 
     /**
      * If this SymTable's list is empty, throw an EmptySymTableException.
@@ -56,10 +75,24 @@ public class SymTable {
      * @return: the symbol information associated with this name in the lowest scope
      *          otherwise return null
      */
-    public Sym lookupLocal(String name){
-        throw new NotImplementedException();
+    public Sym lookupLocal(String name) throws EmptySymTableException {
+        if (name == null){
+            throw new NullPointerException();
+        }
+
+        checkTableWhetherEmpty();
+        return lookupInOneScope(this.table.peek(), name);
     }
 
+    /**
+     * This method checks whether the table is empty.
+     * @throws EmptySymTableException
+     */
+    private void checkTableWhetherEmpty() throws EmptySymTableException{
+        if (this.table.size() == 0){
+            throw new EmptySymTableException();
+        }
+    }
 
     /**
      * If this SymTable's list is empty, throw an EmptySymTableException.
@@ -68,10 +101,33 @@ public class SymTable {
      * @param name: the name of the symbol you want to look up
      * @return
      */
-    public Sym lookupGlobal(String name){
-        throw new NotImplementedException();
+    public Sym lookupGlobal(String name) throws EmptySymTableException{
+        if (name == null){
+            throw new NullPointerException();
+        }
+
+        checkTableWhetherEmpty();
+
+        // Search each scope until one non-null result has been found;
+        for (HashMap<String, Sym> scope: this.table){
+            Sym result = lookupInOneScope(scope, name);
+            if (result != null){
+                return result;
+            }
+        }
+
+        return null;
     }
 
+    /**
+     * find the sym based on the given name.
+     * @param scope the place for searching
+     * @param name sym key
+     * @return The sym object for the scope. Null if can't find the key
+     */
+    private Sym lookupInOneScope(HashMap<String, Sym> scope, String name){
+        return scope.getOrDefault(name,null);
+    }
 
     /**
      * If this SymTable's list is empty, throw an EmptySymTableException;
@@ -81,7 +137,11 @@ public class SymTable {
      * @throws EmptySymTableException
      */
     public void removeScope() throws EmptySymTableException{
-        throw new NotImplementedException();
+        try{
+            this.table.pop();
+        } catch (NoSuchElementException e){
+            throw new EmptySymTableException();
+        }
     }
 
     /**
@@ -89,6 +149,11 @@ public class SymTable {
      * print M.toString() followed by a newline. Finally, print one more newline. All output should go to System.out.
      */
     public void print(){
+        System.out.print("\nSym Table\n");
 
+        for (HashMap<String, Sym> scope: this.table){
+            System.out.print(scope.toString());
+        }
+        System.out.println();
     }
 }

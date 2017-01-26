@@ -130,14 +130,20 @@ public class P1 {
         }
 
         // Test lookup local with null
-        if(symbolTable.lookupLocal("DoctorWho?")!= null){
-            System.out.println("Wrong result for looking " +
-                    "something that doesn't exist in local.");
-        }
+        try {
 
-        if(symbolTable.lookupGlobal("DoctorWho?")!= null){
-            System.out.println("Wrong result for looking " +
-                    "something that doesn't exist in global.");
+
+            if (symbolTable.lookupLocal("DoctorWho?") != null) {
+                System.out.println("Wrong result for looking " +
+                        "something that doesn't exist in local.");
+            }
+
+            if (symbolTable.lookupGlobal("DoctorWho?") != null) {
+                System.out.println("Wrong result for looking " +
+                        "something that doesn't exist in global.");
+            }
+        }catch (EmptySymTableException e){
+
         }
 
         Sym batmanDupSym = new Sym("Hero");
@@ -151,24 +157,39 @@ public class P1 {
         }
 
         // Test lookup the local
-        if (symbolTable.lookupLocal("batman") != batmanDupSym ){
-            System.out.println("This is wrong result for lookupLocal");
+        try {
+            if (symbolTable.lookupLocal("batman") != batmanDupSym) {
+                System.out.println("This is wrong result for lookupLocal");
+            }
+        } catch (EmptySymTableException e){
+
         }
 
         // Test lookup the batman
-        if (symbolTable.lookupGlobal("batman") != batmanDupSym){
-            System.out.println("This is wrong result for lookup Global");
+        try {
+            if (symbolTable.lookupGlobal("batman") != batmanDupSym) {
+                System.out.println("This is wrong result for lookup Global");
+            }
+        }   catch (EmptySymTableException e){
+
         }
 
         symbolTable.addScope();
-        if (symbolTable.lookupGlobal("batman") == batmanSym){
-            System.out.println("Lookup global doesn't follow the " +
-                    "rule of only finding the closest scope");
+        try {
+            if (symbolTable.lookupGlobal("batman") == batmanSym) {
+                System.out.println("Lookup global doesn't follow the " +
+                        "rule of only finding the closest scope");
+            }
+        }catch (EmptySymTableException e){
+
         }
 
-        if (symbolTable.lookupLocal("batman")!= batmanSym){
-            System.out.println("Wrong result for looking up Global");
-        }
+        try {
+            if (symbolTable.lookupLocal("batman") != null) {
+                System.out.println("Wrong result for looking up Local");
+            }
+        } catch (EmptySymTableException e){
 
+        }
     }
 }
