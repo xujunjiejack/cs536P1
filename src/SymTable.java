@@ -152,7 +152,7 @@ public class SymTable {
         System.out.print("\nSym Table\n");
 
         for (HashMap<String, Sym> scope: this.table){
-            System.out.print(scope.toString());
+            System.out.println(scope.toString());
         }
         System.out.println();
     }

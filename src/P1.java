@@ -65,6 +65,7 @@ public class P1 {
 
         }
 
+
         try{
             symbolTable.addDecl("spiderman", spidermanSym);
             System.out.println("No exception thrown on attempt to add symbol");
@@ -89,6 +90,7 @@ public class P1 {
         }catch (EmptySymTableException e){
         }
 
+        symbolTable.addScope();
 
         // Test null pointer
         try{
@@ -191,5 +193,6 @@ public class P1 {
         } catch (EmptySymTableException e){
 
         }
+        symbolTable.print();
     }
 }
