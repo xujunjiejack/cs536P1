@@ -8,7 +8,8 @@
 // Email:            jxu259
 // CS Login:         junjie
 // Lecturer's Name:  Thomas Reps
-//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 
 /**
  * Indicate when there is duplicate sym name in the scope

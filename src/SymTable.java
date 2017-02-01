@@ -178,6 +178,7 @@ public class SymTable {
         for (HashMap<String, Sym> scope: this.table){
             System.out.println(scope.toString());
         }
+
         System.out.println();
     }
 }

@@ -11,6 +11,7 @@
 //////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ////////////////////
 
 /**
+ * The exception thrown when sym table is empty
  * Created by junjie on 1/19/17.
  */
 public class EmptySymTableException extends Exception {
